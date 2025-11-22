@@ -1,0 +1,23 @@
+openapi: 3.0.0
+info:
+  title: Telegram Webhook → Workflows
+  version: 1.0.0
+paths:
+  /handle:
+    post:
+      x-yc-apigateway-integration:
+        type: http
+        method: POST
+        service_account_id: <ajec1rspvrnb7k1j0amh>  # сервисный аккаунт sa-apigw
+        url: https://serverless-workflows.api.cloud.yandex.net/workflows/v1/execution/start
+      requestBody:
+        description: Telegram update passthrough to Workflows
+        content:
+          application/json:
+            schema:
+              x-yc-schema-mapping:
+                type: static
+                template:
+                  workflowId: <dfqeh1ob9qulq5o06qsg>  # ваш рабочий процесс
+                  input:
+                    inputJson: ${.|tojson}  # весь апдейт Telegram как input
